@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Appointment from "./Pages/Appointment/Appointment";
 import Home from "./Pages/HomePage/Home/Home";
 import Login from "./Pages/LoginRegister/Login/Login";
+import Register from "./Pages/LoginRegister/Register/Register";
 import Footer from "./Pages/SharedItem/Footer/Footer";
 import Header from "./Pages/SharedItem/Header/Header";
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/home" element={<Home />}></Route>
         <Route path="/appointment" element={<Appointment />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/register" element={<Register />}></Route>
       </Routes>
       <Footer></Footer>
     </div>
