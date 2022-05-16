@@ -1,41 +1,51 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import Loading from '../../SharedItem/Loading/Loading';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Login = () => {
     const emailRef = useRef('');
     const passwordRef = useRef('');
+    const navigate = useNavigate();
+    const location = useLocation();
 
+    let from = location.state?.from?.pathname || "/"; 
     const [
         signInWithEmailAndPassword,
         user,
         loading,
         error,
     ] = useSignInWithEmailAndPassword(auth);
-    
+
+    useEffect(() => {
+        if (user) {
+            navigate(from, { replace: true });
+        }
+    },[user,navigate,from])
+
+    if (loading) {
+        return <Loading></Loading>;
+    }
+
     if (error) {
         return (
-          <div>
-            <p>Error: {error.message}</p>
-          </div>
+            <div>
+                <p>Error: {error.message}</p>
+            </div>
         );
     }
-    if (user) {
-        return (
-          <div>
-            <p>Signed In User: {user.email}</p>
-          </div>
-        );
-      }
-    
+
+
     const handleLogin = event => {
         event.preventDefault();
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
 
         signInWithEmailAndPassword(email, password);
+
+        event.reset();
 
     }
     return (

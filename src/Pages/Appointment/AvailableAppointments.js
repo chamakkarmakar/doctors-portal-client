@@ -5,10 +5,10 @@ import BookingModal from './BookingModal';
 
 const AvailableAppointments = ({ selected }) => {
     const [services, setServices] = useState([]);
-    const [modal, setModal] = useState(null);
+    const [treatment, setTreatment] = useState(null);
 
     useEffect(() => {
-        fetch('services.json')
+        fetch('http://localhost:5000/appointment')
             .then(res => res.json())
             .then(data => setServices(data))
     }, [])
@@ -20,14 +20,14 @@ const AvailableAppointments = ({ selected }) => {
                     services.map(service => <ApointmentService
                         key={service._id}
                         service={service}
-                        setModal={setModal}
+                        setTreatment={setTreatment}
                     ></ApointmentService>)
                 }
             </div>
-            {modal && <BookingModal
-                modal={modal}
+            {treatment && <BookingModal
+                treatment={treatment}
                 selected={selected}
-                setModal={setModal}
+                setTreatment={setTreatment}
             ></BookingModal>}
         </div>
     );
